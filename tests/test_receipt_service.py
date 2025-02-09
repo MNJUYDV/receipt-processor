@@ -165,3 +165,4 @@ def test_description_length_points(receipt_service):
     # - 6 points for odd day
     expected_points = 92  # 4 + 50 + 25 + 5 + 1 + 1 + 6
     assert points == expected_points
+    

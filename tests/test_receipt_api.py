@@ -51,7 +51,6 @@ def test_process_walgreens_receipt(example_receipts):
     assert points_response.status_code == 200
     points = points_response.json()["points"]
     
-    # Let's verify each rule for the Walgreens receipt:
     # Receipt details:
     # - Retailer: "Walgreens" (9 alphanumeric chars)
     # - Total: "2.65"
