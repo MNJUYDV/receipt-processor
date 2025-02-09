@@ -1,10 +1,52 @@
 # Receipt Processor
 
-A FastAPI application that processes receipts and calculates reward points based on various rules.
+## Running with Docker
 
-## Setup and Installation
+### Prerequisites
+- Docker
+- Docker Compose
 
-1. Create a virtual environment:
+### Building and Running
+
+1. Build and start the container:
+```bash
+docker-compose up --build
+```
+
+2. Access the API:
+- Main API: http://localhost:8000
+- Interactive docs: http://localhost:8000/docs
+- Alternative docs: http://localhost:8000/redoc
+
+### Running Tests in Docker
+
+1. Build and run tests:
+```bash
+docker-compose run web pytest
+```
+
+2. Run specific test file:
+```bash
+docker-compose run web pytest tests/test_receipt_api.py -v
+```
+
+### Development with Docker
+
+1. The application code is mounted as a volume, so changes will be reflected immediately with the --reload flag enabled.
+
+2. View logs:
+```bash
+docker-compose logs -f
+```
+
+3. Stop the containers:
+```bash
+docker-compose down
+```
+
+## Manual Setup (without Docker)
+
+1. Create virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: .\venv\Scripts\activate
@@ -15,47 +57,24 @@ source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Running the Application
-
-Start the server:
+3. Run the application:
 ```bash
 uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
-
-## API Documentation
-
-Once the application is running, you can access:
-- Interactive API documentation: `http://localhost:8000/docs`
-- Alternative API documentation: `http://localhost:8000/redoc`
-
-### Endpoints
-
-1. Process Receipt
-   - POST `/receipts/process`
-   - Accepts a receipt JSON and returns an ID
-
-2. Get Points
-   - GET `/receipts/{id}/points`
-   - Returns the points awarded for the receipt
-
-## Running Tests
-
-Execute tests using pytest:
+4. Run tests:
 ```bash
 pytest
 ```
 
-## Project Structure
+## API Documentation
 
-```
-receipt_processor/
-├── app/
-│   ├── api/            # API endpoints
-│   ├── core/           # Core configuration
-│   ├── models/         # Pydantic models
-│   ├── services/       # Business logic
-│   └── utils/          # Utility functions
-└── tests/              # Test files
-```
+### Endpoints
+
+1. Process Receipt
+- POST `/receipts/process`
+- Accepts a receipt JSON and returns an ID
+
+2. Get Points
+- GET `/receipts/{id}/points`
+- Returns the points awarded for the receipt
