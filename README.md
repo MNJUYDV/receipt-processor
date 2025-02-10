@@ -1,80 +1,68 @@
 # Receipt Processor
 
-## Running with Docker
+A FastAPI service that processes receipts and calculates points based on specific rules. The service allows you to submit receipts and retrieve their point values.
 
-### Prerequisites
-- Docker
-- Docker Compose
+## Setup and Run
 
-### Building and Running
-
-1. Build and start the container:
+### Using Docker
 ```bash
+# Build and run
 docker-compose up --build
-```
 
-2. Access the API:
-- Main API: http://localhost:8000
-- Interactive docs: http://localhost:8000/docs
-- Alternative docs: http://localhost:8000/redoc
-
-### Running Tests in Docker
-
-1. Build and run tests:
-```bash
-docker-compose run web pytest
-```
-
-2. Run specific test file:
-```bash
-docker-compose run web pytest tests/test_receipt_api.py -v
-```
-
-### Development with Docker
-
-1. The application code is mounted as a volume, so changes will be reflected immediately with the --reload flag enabled.
-
-2. View logs:
-```bash
-docker-compose logs -f
-```
-
-3. Stop the containers:
-```bash
+# Stop
 docker-compose down
 ```
 
-## Manual Setup (without Docker)
-
-1. Create virtual environment:
+### Without Docker
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: .\venv\Scripts\activate
-```
-
-2. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-3. Run the application:
-```bash
+# Run server
 uvicorn app.main:app --reload
-```
 
-4. Run tests:
-```bash
+# Run tests
 pytest
 ```
 
-## API Documentation
+## API Endpoints
 
-### Endpoints
+### 1. Process Receipt
+POST `/receipts/process`
 
-1. Process Receipt
-- POST `/receipts/process`
-- Accepts a receipt JSON and returns an ID
+Request body example:
+```json
+{
+  "retailer": "Target",
+  "purchaseDate": "2022-01-01",
+  "purchaseTime": "13:01",
+  "items": [
+    {
+      "shortDescription": "Mountain Dew 12PK",
+      "price": "6.49"
+    }
+  ],
+  "total": "6.49"
+}
+```
 
-2. Get Points
-- GET `/receipts/{id}/points`
-- Returns the points awarded for the receipt
+Response:
+```json
+{
+  "id": "7fb1377b-b223-49d9-a31a-5a02701dd310"
+}
+```
+
+### 2. Get Points
+GET `/receipts/{id}/points`
+
+Response:
+```json
+{
+  "points": 32
+}
+```
+
+Access the API documentation at:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
